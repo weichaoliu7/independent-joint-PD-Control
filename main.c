@@ -60,8 +60,8 @@ int main()
     de[0][0] = de1[0];
     de[1][0] = de2[0];
 
-    double Kp[2][2] = {{50, 0}, {0, 50}};  // proportional gain 
-    double Kd[2][2] = {{50, 0}, {0, 50}};  // differential gain
+    double Kp[2][2] = {{30, 0}, {0, 30}};  // proportional gain 
+    double Kd[2][2] = {{30, 0}, {0, 30}};  // differential gain
 
     double tol[2][ARRAY_SIZE];  // control torque
 
@@ -264,4 +264,8 @@ int main()
     printf("to12.txt successfully saved\n");
 
     return 0;
+
+    // set title "plot of q1"
+    // plot "q1.txt" with lines
+
 }
