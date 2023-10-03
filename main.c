@@ -103,17 +103,18 @@ int main()
 
     double a = D0[0][0][0], b = D0[0][1][0], c = D0[1][0][0], d = D0[1][1][0];
 
-    double D0_inv[2][2][ARRAY_SIZE], S[2][ARRAY_SIZE];
+    double D0_inv[2][2][ARRAY_SIZE], tol_C0dq[2][2][ARRAY_SIZE], S[2][ARRAY_SIZE];
+    double tol_C0dq_1[ARRAY_SIZE], tol_C0dq_2[ARRAY_SIZE];
 
     D0_inv[0][0][0] = d / (a*d - b*c);
     D0_inv[0][1][0] = -b / (a*d - b *c);
     D0_inv[1][0][0] = -c / (a*d - b *c);
     D0_inv[1][1][0] = a / (a*d - b *c);
 
-    double tol_C0dq[2] = { tol[0][0] - ( C0[0][0][0] * dq[0][0] + C0[0][1][0] * dq[1][0] ),
-                           tol[1][0] - ( C0[1][0][0] * dq[0][0] + C0[1][1][0] * dq[1][0] ) };
-    S[0][0] = D0_inv[0][0][0] * tol_C0dq[0] + D0_inv[0][1][0] * tol_C0dq[1];
-    S[1][0] = D0_inv[1][0][0] * tol_C0dq[0] + D0_inv[1][1][0] * tol_C0dq[1];
+    tol_C0dq_1[0] = tol[0][0] - ( C0[0][0][0] * dq[0][0] + C0[0][1][0] * dq[1][0]);
+    tol_C0dq_2[0] = tol[1][0] - ( C0[1][0][0] * dq[0][0] + C0[1][1][0] * dq[1][0] );
+    S[0][0] = D0_inv[0][0][0] * tol_C0dq_1[0] + D0_inv[0][1][0] * tol_C0dq_2[0];
+    S[1][0] = D0_inv[1][0][0] * tol_C0dq_1[0] + D0_inv[1][1][0] * tol_C0dq_2[0];
 
     double ddq[2][ARRAY_SIZE], q[2][ARRAY_SIZE];
 
@@ -198,10 +199,10 @@ int main()
         D0_inv[1][0][i] = -c / (a*d - b *c);
         D0_inv[1][1][i] = a / (a*d - b *c);
 
-        double tol_C0dq[2] = { tol[0][i] - ( C0[0][0][i] * dq[0][i] + C0[0][1][i] * dq[1][i] ),
-                               tol[1][i] - ( C0[1][0][i] * dq[0][i] + C0[1][1][i] * dq[1][i] ) };
-        S[0][i] = D0_inv[0][0][i] * tol_C0dq[0] + D0_inv[0][1][i] * tol_C0dq[1];
-        S[1][i] = D0_inv[1][0][i] * tol_C0dq[0] + D0_inv[1][1][i] * tol_C0dq[1];
+        tol_C0dq_1[i] = tol[0][i] - ( C0[0][0][i] * dq[0][i] + C0[0][1][i] * dq[1][i]);
+        tol_C0dq_2[i] = tol[1][i] - ( C0[1][0][i] * dq[0][i] + C0[1][1][i] * dq[1][i] );
+        S[0][i] = D0_inv[0][0][i] * tol_C0dq_1[i] + D0_inv[0][1][i] * tol_C0dq_2[i];
+        S[1][i] = D0_inv[1][0][i] * tol_C0dq_1[i] + D0_inv[1][1][i] * tol_C0dq_2[i];
 
         ddq[0][i]=S[0][i];
         ddq[1][i]=S[1][i];
